@@ -9,8 +9,8 @@ Since becoming a leader, I have thought about what it means to be a leader and, 
 
 In my observation of other leaders out there, I came to realize that a good leader, in the end, actually needs two main traits:
 
-Have a strong vision
-Ask the right questions
+* Have a strong vision
+* Ask the right questions
 
 Let's dig deeper into each one of these items.
 

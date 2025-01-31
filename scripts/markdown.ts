@@ -16,29 +16,27 @@
 // This is **bold**, __bold indeed__!;
 // But this _is italic_, *italic indeed*.
 
+// * this
+// * is
+// * a
+// * list
+
+
+// However
+
+// - this
+// - is
+// - one
+// - toooo
+
 // How about we are both **_bold and italic at the same time_**?
 // Or _**Italic and bold **_ or perhaps ___ italic or bold ___?
 // `
 
-// console.log(parse(markdown));
-
-// Expected:
-
-// <h1>Header 1</h1>
-// <h2>Header 2</h2>
-// <h3>Header 3</h3>
-
-// <p>Paragraph</p>
-
-// <p>This is <strong>bold</strong>, <strong>bold indeed</strong>!;</p>
-// <p>But this <em>is italic</em>, <em>italic indeed</em>.</p>
-
-// <p>How about we are both <strong><em>bold and italic at the same time</em></strong>?</p>
-// <p>Or <em><strong>Italic and bold </strong></em> or perhaps <strong><em> italic or bold </strong></em>?</p>
-
+// parse(markdown);
 
 export function parse(text: string) : string {
-    return replaceFrontmatter(replaceHeaders(replaceItalic(replaceBold(replaceParagraphs(text)))));
+    return replaceFrontmatter(replaceHeaders(replaceItalic(replaceBold(replaceList(replaceParagraphs(text))))));
 }
 
 export function matchFrontmatter(text: string) : RegExpMatchArray {
@@ -77,11 +75,24 @@ function replaceBold(text: string) : string {
 }
 
 function replaceParagraphs(text: string) : string {
-    const regexp = /^(?!\s*(?:#|\*|---|\w+:)).+/gm;
+    const regexp = /^(?!\s*(?:#|\*|\-|---|\w+:)).+/gm;
     const matches = text.matchAll(regexp);
     for (const match of matches) {
         text = text.replace(match[0], paragraphTag(match));
     }
+    return text;
+}
+
+function replaceList(text: string) : string {
+    const regexp = /(([\*|-] {1,}.*\n)+\n)/gm;
+    const matches = text.matchAll(regexp);
+
+    for (const match of matches) {
+        const li = match[0].split("\n").map(e => e.split(/\* |- /)[1]).filter(e => e != undefined && e != "").map(e => `<li>${e}</li>`).join("")
+        const ul = `<ul>${li}</ul>`;
+        text = text.replace(match[0], ul);
+    }
+
     return text;
 }
 

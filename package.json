@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc",
-    "run": "npx ts-node scripts/build.ts",
+    "run": "npx ts-node scripts/markdown.ts",
     "clean": "rm -rf dist"
   },
   "keywords": [],
