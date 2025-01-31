@@ -1,0 +1,1 @@
+npm run clean && npm run compile && node dist/build.js
